@@ -1,0 +1,240 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Font Faces ─────────────────────────────────────────────────────────── */
+@font-face {
+  font-family: "Outfit";
+  src: url("/assets/fonts/Outfit-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/assets/fonts/BricolageGrotesque-Variable.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
+}
+
+/* ─── Design Tokens ──────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    --radius: 0.75rem;
+
+    /* Greens — taxi/nature palette */
+    --background: 0.98 0.008 120;
+    --foreground: 0.12 0.04 145;
+
+    --card: 1 0 0;
+    --card-foreground: 0.12 0.04 145;
+
+    --popover: 1 0 0;
+    --popover-foreground: 0.12 0.04 145;
+
+    /* Primary: deep forest green */
+    --primary: 0.42 0.14 145;
+    --primary-foreground: 0.98 0 0;
+
+    /* Secondary: light sage */
+    --secondary: 0.93 0.04 140;
+    --secondary-foreground: 0.25 0.08 145;
+
+    /* Muted */
+    --muted: 0.95 0.015 130;
+    --muted-foreground: 0.48 0.04 145;
+
+    /* Accent: golden yellow for fares */
+    --accent: 0.85 0.18 88;
+    --accent-foreground: 0.12 0.04 60;
+
+    /* Destructive: warm red */
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+
+    --border: 0.88 0.03 140;
+    --input: 0.88 0.03 140;
+    --ring: 0.42 0.14 145;
+
+    --chart-1: 0.42 0.14 145;
+    --chart-2: 0.85 0.18 88;
+    --chart-3: 0.577 0.245 27;
+    --chart-4: 0.65 0.12 200;
+    --chart-5: 0.55 0.16 145;
+
+    --sidebar: 0.95 0.04 140;
+    --sidebar-foreground: 0.12 0.04 145;
+    --sidebar-primary: 0.42 0.14 145;
+    --sidebar-primary-foreground: 0.98 0 0;
+    --sidebar-accent: 0.90 0.06 140;
+    --sidebar-accent-foreground: 0.25 0.08 145;
+    --sidebar-border: 0.88 0.03 140;
+    --sidebar-ring: 0.42 0.14 145;
+
+    /* Custom tokens */
+    --green-dark: 0.28 0.12 145;
+    --green-mid: 0.50 0.16 145;
+    --green-light: 0.75 0.14 145;
+    --gold: 0.82 0.18 88;
+    --gold-text: 0.12 0.05 65;
+    --success: 0.55 0.15 145;
+    --warning: 0.78 0.16 80;
+    --online-dot: 0.60 0.18 145;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Large touch targets for village users */
+  button, a, [role="button"] {
+    min-height: 44px;
+    cursor: pointer;
+  }
+}
+
+/* ─── Custom Utilities ───────────────────────────────────────────────────── */
+@layer utilities {
+  .font-display {
+    font-family: "Bricolage Grotesque", sans-serif;
+  }
+  .font-body {
+    font-family: "Outfit", sans-serif;
+  }
+
+  .bg-green-dark { background-color: oklch(var(--green-dark)); }
+  .bg-green-mid { background-color: oklch(var(--green-mid)); }
+  .bg-green-light-custom { background-color: oklch(var(--green-light)); }
+  .text-green-dark { color: oklch(var(--green-dark)); }
+  .text-gold { color: oklch(var(--gold-text)); }
+  .bg-gold { background-color: oklch(var(--gold)); }
+
+  /* Pulsing location dot */
+  .pulse-dot {
+    width: 16px;
+    height: 16px;
+    background-color: oklch(0.45 0.20 145);
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 oklch(0.45 0.20 145 / 0.7);
+    animation: pulse-green 2s infinite;
+  }
+
+  /* Taxi tracking pulse */
+  .taxi-pulse {
+    width: 20px;
+    height: 20px;
+    background-color: oklch(0.42 0.16 145);
+    border: 3px solid white;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 oklch(0.42 0.16 145 / 0.6);
+    animation: pulse-green 1.5s infinite;
+    position: absolute;
+  }
+}
+
+/* ─── Animations ─────────────────────────────────────────────────────────── */
+@keyframes pulse-green {
+  0% {
+    box-shadow: 0 0 0 0 oklch(0.45 0.20 145 / 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 14px oklch(0.45 0.20 145 / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 oklch(0.45 0.20 145 / 0);
+  }
+}
+
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes slide-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in-up 0.35s ease-out;
+}
+
+/* ─── Tab active style override ─────────────────────────────────────────── */
+.taxi-tab[data-state="active"] {
+  background-color: oklch(var(--primary));
+  color: oklch(var(--primary-foreground));
+  font-weight: 700;
+}
+
+.taxi-tab {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  font-family: "Outfit", sans-serif;
+}
+
+/* ─── Map embed wrapper ──────────────────────────────────────────────────── */
+.map-wrapper {
+  position: relative;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 2px solid oklch(var(--primary) / 0.3);
+}
+
+.map-wrapper iframe {
+  display: block;
+  width: 100%;
+  height: 260px;
+  border: none;
+}
+
+/* ─── Status badges ──────────────────────────────────────────────────────── */
+.status-pending   { background: oklch(0.90 0.16 80); color: oklch(0.30 0.10 60); }
+.status-accepted  { background: oklch(0.85 0.12 230); color: oklch(0.22 0.09 230); }
+.status-completed { background: oklch(0.85 0.14 145); color: oklch(0.22 0.10 145); }
+.status-cancelled { background: oklch(0.92 0.12 20); color: oklch(0.35 0.15 20); }
+
+/* ─── Header gradient ────────────────────────────────────────────────────── */
+.app-header {
+  background: linear-gradient(135deg,
+    oklch(0.30 0.14 145) 0%,
+    oklch(0.42 0.16 145) 50%,
+    oklch(0.36 0.18 155) 100%
+  );
+}
+
+/* ─── Drop location buttons ──────────────────────────────────────────────── */
+.drop-btn {
+  transition: all 0.2s ease;
+  border: 2px solid oklch(var(--border));
+}
+
+.drop-btn:hover {
+  border-color: oklch(var(--primary));
+  background-color: oklch(var(--secondary));
+}
+
+.drop-btn.selected {
+  border-color: oklch(var(--primary));
+  background-color: oklch(var(--primary));
+  color: oklch(var(--primary-foreground));
+}
+
+/* ─── Scrollbar polish ───────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: oklch(var(--border)); border-radius: 3px; }
